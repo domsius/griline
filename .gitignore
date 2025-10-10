@@ -1,0 +1,95 @@
+# WordPress Core
+/wp-admin/
+/wp-includes/
+/wp-*.php
+/xmlrpc.php
+/readme.html
+/license.txt
+
+# WordPress Config
+wp-config.php
+wp-config-local.php
+.htaccess
+
+# WordPress Uploads & Cache
+/wp-content/uploads/
+/wp-content/cache/
+/wp-content/backup*/
+/wp-content/backups/
+/wp-content/blogs.dir/
+/wp-content/upgrade/
+/wp-content/updraft/
+
+# WordPress Plugins (except custom)
+/wp-content/plugins/
+!/wp-content/plugins/.gitkeep
+
+# WordPress Themes (except custom)
+/wp-content/themes/twenty*/
+!/wp-content/themes/.gitkeep
+
+# WordPress Languages
+/wp-content/languages/
+
+# Node Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Build & Compiled Files
+*.min.css
+*.min.js
+*.map
+dist/
+build/
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# SFTP & FTP
+sftp-config.json
+.ftpconfig
+.ftppass
+.vscode/sftp.json
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Logs
+*.log
+logs/
+*.sql
+*.sqlite
+
+# Temporary Files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Backup Files
+*.bak
+*.backup
+*.old
