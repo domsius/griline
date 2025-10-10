@@ -164,7 +164,7 @@ foreach ($content_data as $key => $value) {
                                         </table>
 
                                         <p style="margin: 15px 0 0 0; color: #999999; font-size: 11px;">
-                                            UAB "Gaisrinė"
+                                            UAB "Grilinė"
                                         </p>
                                     </td>
                                 </tr>
