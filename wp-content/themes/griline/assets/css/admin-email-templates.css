@@ -1,0 +1,99 @@
+/* Admin Email Templates Styles */
+
+.loyalty-email-templates-page .language-tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.loyalty-email-templates-page .template-editor-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.loyalty-email-templates-page .editor-panel {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+}
+
+.loyalty-email-templates-page .preview-panel {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    position: sticky;
+    top: 32px;
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+}
+
+.loyalty-email-templates-page .email-preview-container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    background: #f4ede5;
+    min-height: 400px;
+    border-radius: 4px;
+}
+
+.loyalty-email-templates-page .email-preview-container iframe {
+    width: 100%;
+    border: none;
+    min-height: 600px;
+}
+
+.loyalty-email-templates-page .test-email-section {
+    margin-top: 30px;
+}
+
+.loyalty-email-templates-page .test-email-section h3 {
+    margin-top: 0;
+}
+
+.loyalty-email-templates-page #test-email-message {
+    margin-top: 10px;
+}
+
+.loyalty-email-templates-page #test-email-message.success {
+    color: #00a32a;
+    font-weight: 500;
+}
+
+.loyalty-email-templates-page #test-email-message.error {
+    color: #d63638;
+    font-weight: 500;
+}
+
+.loyalty-email-templates-page .form-table th {
+    width: 180px;
+}
+
+.loyalty-email-templates-page .form-table textarea {
+    min-height: 60px;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+    .loyalty-email-templates-page .template-editor-container {
+        grid-template-columns: 1fr;
+    }
+
+    .loyalty-email-templates-page .preview-panel {
+        position: relative;
+        top: 0;
+        max-height: none;
+    }
+}
+
+/* Loading spinner */
+.loyalty-email-templates-page .spinner {
+    float: none;
+    margin: 0 10px;
+    visibility: visible;
+}
+
+.loyalty-email-templates-page .spinner.is-active {
+    display: inline-block;
+}
