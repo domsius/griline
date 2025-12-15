@@ -76,7 +76,7 @@ get_header('page');
                     // Only show form if not successful
                     if ($show_form) :
 
-                    // Form labels by language
+                    // Form labels and placeholders by language
                     $labels = array(
                         'lt' => array(
                             'first_name' => 'Vardas *',
@@ -87,7 +87,14 @@ get_header('page');
                             'phone' => 'Tel. numeris *',
                             'card_number' => 'Lojalumo kortelės nr. *',
                             'consent' => 'Sutinku gauti informaciją apie specialius pasiūlymus, šventes ir kt. telefonu bei el. paštu',
-                            'submit' => 'Registruotis'
+                            'submit' => 'Registruotis',
+                            'placeholder_first_name' => 'Įveskite savo vardą',
+                            'placeholder_last_name' => 'Įveskite savo pavardę',
+                            'placeholder_birth_date' => 'YYYY-MM-DD',
+                            'placeholder_city' => 'Įveskite savo miestą',
+                            'placeholder_email' => 'jusu.pastas@example.com',
+                            'placeholder_phone' => '+370 600 00000',
+                            'placeholder_card_number' => '000500'
                         ),
                         'en' => array(
                             'first_name' => 'First Name *',
@@ -98,7 +105,14 @@ get_header('page');
                             'phone' => 'Phone Number *',
                             'card_number' => 'Loyalty Card Number *',
                             'consent' => 'I agree to receive information about special offers, events, etc. by phone and email',
-                            'submit' => 'Register'
+                            'submit' => 'Register',
+                            'placeholder_first_name' => 'Enter your first name',
+                            'placeholder_last_name' => 'Enter your last name',
+                            'placeholder_birth_date' => 'YYYY-MM-DD',
+                            'placeholder_city' => 'Enter your city',
+                            'placeholder_email' => 'your.email@example.com',
+                            'placeholder_phone' => '+370 600 00000',
+                            'placeholder_card_number' => '000500'
                         ),
                         'ru' => array(
                             'first_name' => 'Имя *',
@@ -109,7 +123,14 @@ get_header('page');
                             'phone' => 'Номер телефона *',
                             'card_number' => 'Номер карты лояльности *',
                             'consent' => 'Я согласен получать информацию о специальных предложениях, мероприятиях и т.д. по телефону и электронной почте',
-                            'submit' => 'Зарегистрироваться'
+                            'submit' => 'Зарегистрироваться',
+                            'placeholder_first_name' => 'Введите ваше имя',
+                            'placeholder_last_name' => 'Введите вашу фамилию',
+                            'placeholder_birth_date' => 'ГГГГ-ММ-ДД',
+                            'placeholder_city' => 'Введите ваш город',
+                            'placeholder_email' => 'your.email@example.com',
+                            'placeholder_phone' => '+370 600 00000',
+                            'placeholder_card_number' => '000500'
                         )
                     );
 
@@ -123,18 +144,18 @@ get_header('page');
 
                         <div class="form-group">
                             <label for="vardas"><?php echo esc_html($l['first_name']); ?></label>
-                            <input type="text" id="vardas" name="vardas">
+                            <input type="text" id="vardas" name="vardas" placeholder="<?php echo esc_attr($l['placeholder_first_name']); ?>">
                         </div>
 
                         <div class="form-group">
                             <label for="pavarde"><?php echo esc_html($l['last_name']); ?></label>
-                            <input type="text" id="pavarde" name="pavarde">
+                            <input type="text" id="pavarde" name="pavarde" placeholder="<?php echo esc_attr($l['placeholder_last_name']); ?>">
                         </div>
 
                         <div class="form-group date-input-wrapper">
                             <label for="gimimo-data"><?php echo esc_html($l['birth_date']); ?></label>
                             <div class="input-with-icon">
-                                <input type="text" id="gimimo-data" name="gimimo-data" placeholder="YYYY-MM-DD" readonly>
+                                <input type="text" id="gimimo-data" name="gimimo-data" placeholder="<?php echo esc_attr($l['placeholder_birth_date']); ?>" readonly>
                                 <span class="calendar-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -148,22 +169,22 @@ get_header('page');
 
                         <div class="form-group">
                             <label for="miestas"><?php echo esc_html($l['city']); ?></label>
-                            <input type="text" id="miestas" name="miestas">
+                            <input type="text" id="miestas" name="miestas" placeholder="<?php echo esc_attr($l['placeholder_city']); ?>">
                         </div>
 
                         <div class="form-group">
                             <label for="el-pastas"><?php echo esc_html($l['email']); ?></label>
-                            <input type="email" id="el-pastas" name="el-pastas">
+                            <input type="email" id="el-pastas" name="el-pastas" placeholder="<?php echo esc_attr($l['placeholder_email']); ?>">
                         </div>
 
                         <div class="form-group">
                             <label for="tel-numeris"><?php echo esc_html($l['phone']); ?></label>
-                            <input type="tel" id="tel-numeris" name="tel-numeris">
+                            <input type="tel" id="tel-numeris" name="tel-numeris" placeholder="<?php echo esc_attr($l['placeholder_phone']); ?>">
                         </div>
 
                         <div class="form-group">
                             <label for="korteles-nr"><?php echo esc_html($l['card_number']); ?></label>
-                            <input type="text" id="korteles-nr" name="korteles-nr">
+                            <input type="text" id="korteles-nr" name="korteles-nr" placeholder="<?php echo esc_attr($l['placeholder_card_number']); ?>">
                             <div id="card-validation-message" class="card-validation-message"></div>
                         </div>
 
@@ -291,13 +312,13 @@ get_header('page');
                                                 cardNumberField.style.borderWidth = '2px';
                                             }
                                         },
-                                        error: function() {
+                                        error: function(xhr, status, error) {
                                             cardIsValid = false;
                                             cardValidationMessage.textContent = '✗ <?php
                                                 switch($current_lang) {
-                                                    case 'en': echo 'Validation error'; break;
-                                                    case 'ru': echo 'Ошибка проверки'; break;
-                                                    default: echo 'Tikrinimo klaida';
+                                                    case 'en': echo 'Validation error. Please try again.'; break;
+                                                    case 'ru': echo 'Ошибка проверки. Попробуйте еще раз.'; break;
+                                                    default: echo 'Tikrinimo klaida. Bandykite dar kartą.';
                                                 }
                                             ?>';
                                             cardValidationMessage.className = 'card-validation-message invalid';

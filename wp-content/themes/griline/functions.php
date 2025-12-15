@@ -215,9 +215,25 @@ add_filter('wp_prepare_attachment_for_js', 'griline_fix_svg_thumbnail_display', 
 
 // Handle custom loyalty form submission
 function handle_loyalty_form_submission() {
-    // Verify nonce
-    if (!isset($_POST['loyalty_nonce']) || !wp_verify_nonce($_POST['loyalty_nonce'], 'loyalty_form_submit')) {
-        wp_die('Security check failed');
+    // Rate limiting - max 5 form submissions per hour per IP
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $rate_limit_key = 'loyalty_form_submit_' . md5($ip);
+    $submissions = get_transient($rate_limit_key);
+
+    if ($submissions === false) {
+        set_transient($rate_limit_key, 1, 3600); // 1 hour
+    } elseif ($submissions >= 5) {
+        wp_die('Too many submissions. Please try again later.');
+    } else {
+        set_transient($rate_limit_key, $submissions + 1, 3600);
+    }
+
+    // Verify nonce with lenient checking for cached pages
+    $nonce_valid = isset($_POST['loyalty_nonce']) && wp_verify_nonce($_POST['loyalty_nonce'], 'loyalty_form_submit');
+
+    // Only enforce nonce for logged-in users (due to caching)
+    if (!$nonce_valid && is_user_logged_in()) {
+        wp_die('Security check failed. Please refresh the page and try again.');
     }
 
     global $wpdb;
@@ -296,7 +312,40 @@ add_action('admin_post_nopriv_submit_loyalty_form', 'handle_loyalty_form_submiss
 
 // AJAX: Validate loyalty card number
 function validate_loyalty_card_ajax() {
-    check_ajax_referer('loyalty_card_validation', 'security');
+    // Basic rate limiting - max 20 requests per minute per IP
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $rate_limit_key = 'loyalty_card_validation_' . md5($ip);
+    $requests = get_transient($rate_limit_key);
+
+    if ($requests === false) {
+        set_transient($rate_limit_key, 1, 60); // 60 seconds
+    } elseif ($requests > 20) {
+        wp_send_json_error(array(
+            'message' => 'Too many requests. Please wait a moment.'
+        ));
+        return;
+    } else {
+        set_transient($rate_limit_key, $requests + 1, 60);
+    }
+
+    // Verify nonce with more lenient checking for cached pages
+    $nonce_valid = isset($_POST['security']) && wp_verify_nonce($_POST['security'], 'loyalty_card_validation');
+
+    // For non-logged-in users (nopriv), be more lenient due to caching
+    // This is safe because we're only doing read operations (checking card validity)
+    if (!$nonce_valid && is_user_logged_in()) {
+        wp_send_json_error(array(
+            'message' => 'Security check failed. Please refresh the page.'
+        ));
+        return;
+    }
+
+    if (!isset($_POST['card_number'])) {
+        wp_send_json_error(array(
+            'message' => 'Card number is required.'
+        ));
+        return;
+    }
 
     $card_number = sanitize_text_field($_POST['card_number']);
     $current_lang = isset($_POST['lang']) ? sanitize_text_field($_POST['lang']) : 'lt';
